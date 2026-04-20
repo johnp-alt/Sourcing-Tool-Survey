@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sourcing Tools Survey - Abnormal AI</title>
+</head>
+<body style="margin:0;padding:0;background:#F5F5F3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding-top:40px;">
+
+<div style="background:#fff;border-radius:16px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;max-width:580px;padding:36px 36px 40px;margin:0 16px 60px;">
+
+  <!-- Header -->
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px;">
+    <div style="width:30px;height:30px;border-radius:8px;background:#1D9E75;display:flex;align-items:center;justify-content:center;">
+      <div style="width:10px;height:10px;border-radius:50%;background:#fff;"></div>
+    </div>
+    <span style="font-size:13px;color:#888;font-weight:600;letter-spacing:0.04em;">ABNORMAL AI &middot; RECRUITING TEAM</span>
+  </div>
+
+  <!-- Progress bar -->
+  <div style="height:4px;background:#E8E8E6;border-radius:99px;margin-bottom:32px;">
+    <div id="pgbar" style="height:4px;background:#1D9E75;border-radius:99px;width:14%;transition:width 0.4s ease;"></div>
+  </div>
+
+  <!-- STEP 0: Name -->
+  <div id="s0">
+    <div style="font-size:11px;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Before we start</div>
+    <div style="font-size:22px;font-weight:700;color:#111;margin-bottom:8px;">What's your name?</div>
+    <div style="font-size:14px;color:#777;margin-bottom:20px;">So we know who responded &mdash; won't be shared publicly.</div>
+    <input
+      type="text"
+      id="name-input"
+      placeholder="e.g. Priya Sharma"
+      oninput="st.name=this.value.trim();document.getElementById('next0').disabled=st.name.length<2;"
+      style="display:block;width:100%;box-sizing:border-box;padding:13px 16px;border:2px solid #D0D0CC;border-radius:10px;font-size:16px;font-family:inherit;color:#111;background:#fff;outline:none;margin-bottom:24px;"
+      onfocus="this.style.borderColor='#1D9E75'"
+      onblur="this.style.borderColor='#D0D0CC'"
+    />
+    <div style="display:flex;justify-content:flex-end;">
+      <button id="next0" onclick="goTo(1)" disabled
+        style="padding:11px 24px;background:#1D9E75;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">
+        Let's go &rarr;
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 1: Market -->
+  <div id="s1" style="display:none;">
+    <div style="font-size:11px;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Step 1 of 5</div>
+    <div style="font-size:22px;font-weight:700;color:#111;margin-bottom:8px;">Which market are you sourcing for?</div>
+    <div style="font-size:14px;color:#777;margin-bottom:20px;">Select all that apply.</div>
+    <div id="market-chips" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;">
+      <div class="chip" data-group="market" data-v="India" onclick="toggleChip(this,'market','next1')" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">India</div>
+      <div class="chip" data-group="market" data-v="Singapore" onclick="toggleChip(this,'market','next1')" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">Singapore</div>
+      <div class="chip" data-group="market" data-v="Both" onclick="toggleChip(this,'market','next1')" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">Both</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;">
+      <button onclick="goTo(0)" style="padding:11px 20px;background:#fff;color:#444;border:2px solid #D0D0CC;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">&larr; Back</button>
+      <button id="next1" onclick="goTo(2)" disabled style="padding:11px 24px;background:#1D9E75;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Pain points -->
+  <div id="s2" style="display:none;">
+    <div style="font-size:11px;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Step 2 of 5</div>
+    <div style="font-size:22px;font-weight:700;color:#111;margin-bottom:8px;">Biggest pain points with LinkedIn Recruiter?</div>
+    <div style="font-size:14px;color:#777;margin-bottom:20px;">Pick all that feel true.</div>
+    <div id="pain-chips" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;">
+      <div class="chip" data-group="pains" data-v="Limited reach in passive candidates" onclick="toggleChip(this,'pains','next2')" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">Limited reach in passive candidates</div>
+      <div class="chip" data-group="pains" data-v="High cost" onclick="toggleChip(this,'pains','next2')" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">High cost</div>
+      <div class="chip" data-group="pains" data-v="Outdated or incomplete profiles" onclick="toggleChip(this,'pains','next2')" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">Outdated or incomplete profiles</div>
+      <div class="chip" data-group="pains" data-v="Low response rates" onclick="toggleChip(this,'pains','next2')" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">Low response rates</div>
+      <div class="chip" data-group="pains" data-v="InMail limits" onclick="toggleChip(this,'pains','next2')" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">InMail limits</div>
+      <div class="chip" data-group="pains" data-v="Not enough niche tech talent" onclick="toggleChip(this,'pains','next2')" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">Not enough niche tech talent</div>
+      <div class="chip" data-group="pains" data-v="Hard to filter candidates" onclick="toggleChip(this,'pains','next2')" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">Hard to filter candidates</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;">
+      <button onclick="goTo(1)" style="padding:11px 20px;background:#fff;color:#444;border:2px solid #D0D0CC;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">&larr; Back</button>
+      <button id="next2" onclick="goTo(3)" disabled style="padding:11px 24px;background:#1D9E75;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Tools used -->
+  <div id="s3" style="display:none;">
+    <div style="font-size:11px;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Step 3 of 5</div>
+    <div style="font-size:22px;font-weight:700;color:#111;margin-bottom:8px;">Sourcing tools you've used before?</div>
+    <div style="font-size:14px;color:#777;margin-bottom:20px;">Select anything you've tried, even briefly.</div>
+    <div id="used-chips" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;">
+      <div class="chip" data-group="usedTools" data-v="Naukri" onclick="toggleChip(this,'usedTools',null)" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">Naukri</div>
+      <div class="chip" data-group="usedTools" data-v="Indeed" onclick="toggleChip(this,'usedTools',null)" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">Indeed</div>
+      <div class="chip" data-group="usedTools" data-v="Instahyre" onclick="toggleChip(this,'usedTools',null)" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">Instahyre</div>
+      <div class="chip" data-group="usedTools" data-v="iimjobs" onclick="toggleChip(this,'usedTools',null)" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">iimjobs</div>
+      <div class="chip" data-group="usedTools" data-v="Hirist" onclick="toggleChip(this,'usedTools',null)" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">Hirist</div>
+      <div class="chip" data-group="usedTools" data-v="GitHub Jobs" onclick="toggleChip(this,'usedTools',null)" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">GitHub Jobs</div>
+      <div class="chip" data-group="usedTools" data-v="AngelList / Wellfound" onclick="toggleChip(this,'usedTools',null)" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">AngelList / Wellfound</div>
+      <div class="chip" data-group="usedTools" data-v="Glassdoor" onclick="toggleChip(this,'usedTools',null)" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">Glassdoor</div>
+      <div class="chip" data-group="usedTools" data-v="Twitter / X outreach" onclick="toggleChip(this,'usedTools',null)" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">Twitter / X outreach</div>
+      <div class="chip" data-group="usedTools" data-v="Referral programs" onclick="toggleChip(this,'usedTools',null)" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">Referral programs</div>
+      <div class="chip" data-group="usedTools" data-v="None of the above" data-exclusive="1" onclick="toggleChip(this,'usedTools',null)" style="padding:9px 18px;border:2px solid #D0D0CC;border-radius:99px;font-size:14px;cursor:pointer;background:#fff;color:#333;">None of the above</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;">
+      <button onclick="goTo(2)" style="padding:11px 20px;background:#fff;color:#444;border:2px solid #D0D0CC;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">&larr; Back</button>
+      <button onclick="goTo(4)" style="padding:11px 24px;background:#1D9E75;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Rating -->
+  <div id="s4" style="display:none;">
+    <div style="font-size:11px;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Step 4 of 5</div>
+    <div style="font-size:22px;font-weight:700;color:#111;margin-bottom:8px;">How urgently should we expand beyond LinkedIn?</div>
+    <div style="font-size:14px;color:#777;margin-bottom:20px;">1 = not urgent &nbsp;&middot;&nbsp; 10 = absolutely critical</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;" id="rating-row"></div>
+    <div style="display:flex;justify-content:space-between;">
+      <button onclick="goTo(3)" style="padding:11px 20px;background:#fff;color:#444;border:2px solid #D0D0CC;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">&larr; Back</button>
+      <button id="next4" onclick="goTo(5)" disabled style="padding:11px 24px;background:#1D9E75;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">Next &rarr;</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: Free text -->
+  <div id="s5" style="display:none;">
+    <div style="font-size:11px;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Step 5 of 5</div>
+    <div style="font-size:22px;font-weight:700;color:#111;margin-bottom:8px;">Any other thoughts or tool recommendations?</div>
+    <div style="font-size:14px;color:#777;margin-bottom:20px;">Free text. Skip if nothing comes to mind.</div>
+    <textarea
+      id="freetext"
+      placeholder="e.g. I have heard Instahyre works great for senior tech roles in Bangalore..."
+      style="display:block;width:100%;box-sizing:border-box;min-height:110px;padding:13px 16px;border:2px solid #D0D0CC;border-radius:10px;font-size:15px;font-family:inherit;color:#111;background:#fff;outline:none;resize:vertical;margin-bottom:24px;"
+      onfocus="this.style.borderColor='#1D9E75'"
+      onblur="this.style.borderColor='#D0D0CC'"
+    ></textarea>
+    <div style="display:flex;justify-content:space-between;">
+      <button onclick="goTo(4)" style="padding:11px 20px;background:#fff;color:#444;border:2px solid #D0D0CC;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">&larr; Back</button>
+      <button onclick="showSummary()" style="padding:11px 24px;background:#1D9E75;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">Review &amp; submit &rarr;</button>
+    </div>
+  </div>
+
+  <!-- STEP 6: Review -->
+  <div id="s6" style="display:none;">
+    <div style="font-size:11px;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Review your response</div>
+    <div style="font-size:22px;font-weight:700;color:#111;margin-bottom:20px;">Looks good?</div>
+    <div id="summary-cards"></div>
+    <div id="err-msg" style="display:none;font-size:13px;color:#B91C1C;margin-top:12px;">Something went wrong. Please try again.</div>
+    <div style="display:flex;justify-content:space-between;margin-top:20px;">
+      <button onclick="goTo(5)" style="padding:11px 20px;background:#fff;color:#444;border:2px solid #D0D0CC;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">&larr; Edit</button>
+      <button id="submit-btn" onclick="submitForm()" style="padding:11px 24px;background:#1D9E75;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;">Submit response &rarr;</button>
+    </div>
+  </div>
+
+  <!-- STEP 7: Done -->
+  <div id="s7" style="display:none;text-align:center;padding:20px 0;">
+    <div style="width:60px;height:60px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div style="font-size:22px;font-weight:700;color:#111;margin-bottom:8px;">Response received!</div>
+    <div style="font-size:15px;color:#777;">Thanks for sharing. Your input has been added to the team sheet.</div>
+  </div>
+
+</div>
+
+<script>
+var SCRIPT_URL = "https://script.google.com/a/macros/abnormal.ai/s/AKfycbxJZM9o6WutD8tpfZ5Anukk-WwZig0pCseSYTAfEH2y70RsqJrF2bcp15dmsmzo-o1c/exec";
+
+var st = { name:"", market:[], pains:[], usedTools:[], rating:null, freetext:"" };
+var stepIds = ["s0","s1","s2","s3","s4","s5","s6","s7"];
+var stepPct = [14, 28, 42, 57, 71, 85, 100, 100];
+
+function goTo(n) {
+  for (var i=0; i<stepIds.length; i++) {
+    document.getElementById(stepIds[i]).style.display = "none";
+  }
+  document.getElementById(stepIds[n]).style.display = "block";
+  document.getElementById("pgbar").style.width = stepPct[n] + "%";
+  window.scrollTo(0, 0);
+}
+
+function toggleChip(el, key, nextId) {
+  var isExclusive = el.getAttribute("data-exclusive") === "1";
+  var group = el.getAttribute("data-group");
+  var chips = document.querySelectorAll("[data-group='" + group + "']");
+
+  if (isExclusive) {
+    for (var i=0; i<chips.length; i++) {
+      chips[i].style.background = "#fff";
+      chips[i].style.borderColor = "#D0D0CC";
+      chips[i].style.color = "#333";
+      chips[i].style.fontWeight = "normal";
+    }
+    var wasOn = el.getAttribute("data-on") === "1";
+    if (!wasOn) {
+      el.style.background = "#E1F5EE";
+      el.style.borderColor = "#1D9E75";
+      el.style.color = "#0F6E56";
+      el.style.fontWeight = "600";
+      el.setAttribute("data-on","1");
+    } else {
+      el.setAttribute("data-on","0");
+    }
+  } else {
+    var exclusiveChips = document.querySelectorAll("[data-group='" + group + "'][data-exclusive='1']");
+    for (var j=0; j<exclusiveChips.length; j++) {
+      exclusiveChips[j].style.background = "#fff";
+      exclusiveChips[j].style.borderColor = "#D0D0CC";
+      exclusiveChips[j].style.color = "#333";
+      exclusiveChips[j].setAttribute("data-on","0");
+    }
+    var isOn = el.getAttribute("data-on") === "1";
+    if (!isOn) {
+      el.style.background = "#E1F5EE";
+      el.style.borderColor = "#1D9E75";
+      el.style.color = "#0F6E56";
+      el.style.fontWeight = "600";
+      el.setAttribute("data-on","1");
+    } else {
+      el.style.background = "#fff";
+      el.style.borderColor = "#D0D0CC";
+      el.style.color = "#333";
+      el.style.fontWeight = "normal";
+      el.setAttribute("data-on","0");
+    }
+  }
+
+  var selected = [];
+  for (var k=0; k<chips.length; k++) {
+    if (chips[k].getAttribute("data-on") === "1") selected.push(chips[k].getAttribute("data-v"));
+  }
+  st[key] = selected;
+  if (nextId) document.getElementById(nextId).disabled = selected.length === 0;
+}
+
+// Build rating buttons
+var rr = document.getElementById("rating-row");
+for (var i=1; i<=10; i++) {
+  (function(n){
+    var b = document.createElement("button");
+    b.id = "rb" + n;
+    b.textContent = n;
+    b.setAttribute("data-v", n);
+    b.style.cssText = "width:48px;height:48px;border:2px solid #D0D0CC;border-radius:10px;background:#fff;cursor:pointer;font-size:15px;font-weight:600;color:#666;";
+    b.onclick = function() {
+      for (var j=1; j<=10; j++) {
+        var btn = document.getElementById("rb"+j);
+        btn.style.background = "#fff";
+        btn.style.borderColor = "#D0D0CC";
+        btn.style.color = "#666";
+      }
+      b.style.background = "#E1F5EE";
+      b.style.borderColor = "#1D9E75";
+      b.style.color = "#0F6E56";
+      st.rating = n;
+      document.getElementById("next4").disabled = false;
+    };
+    rr.appendChild(b);
+  })(i);
+}
+
+function showSummary() {
+  st.freetext = document.getElementById("freetext").value.trim();
+  var sc = document.getElementById("summary-cards");
+  sc.innerHTML = "";
+  var rows = [
+    { label: "Your name", vals: [st.name], pain: false },
+    { label: "Market", vals: st.market, pain: false },
+    { label: "LinkedIn pain points", vals: st.pains, pain: true },
+    { label: "Tools used before", vals: st.usedTools.length ? st.usedTools : ["None selected"], pain: false },
+    { label: "Urgency to expand (1-10)", vals: [st.rating + " / 10"], pain: false },
+    { label: "Other thoughts", vals: [st.freetext || "-"], pain: false }
+  ];
+  rows.forEach(function(r) {
+    var d = document.createElement("div");
+    d.style.cssText = "background:#F7F7F4;border-radius:10px;padding:14px 16px;margin-bottom:10px;";
+    var lbl = document.createElement("div");
+    lbl.style.cssText = "font-size:11px;color:#999;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;";
+    lbl.textContent = r.label;
+    d.appendChild(lbl);
+    var valWrap = document.createElement("div");
+    r.vals.forEach(function(v) {
+      var tag = document.createElement("span");
+      tag.textContent = v;
+      tag.style.cssText = "display:inline-block;padding:4px 12px;border-radius:99px;font-size:13px;font-weight:600;margin:2px 4px 2px 0;" +
+        (r.pain ? "background:#FAECE7;color:#993C1D;" : "background:#E1F5EE;color:#0F6E56;");
+      valWrap.appendChild(tag);
+    });
+    d.appendChild(valWrap);
+    sc.appendChild(d);
+  });
+  goTo(6);
+}
+
+function submitForm() {
+  var btn = document.getElementById("submit-btn");
+  var err = document.getElementById("err-msg");
+  err.style.display = "none";
+  btn.disabled = true;
+  btn.textContent = "Submitting...";
+
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: st.name,
+      market: st.market,
+      pains: st.pains,
+      usedTools: st.usedTools,
+      rating: st.rating,
+      freetext: st.freetext
+    })
+  }).then(function() {
+    goTo(7);
+  }).catch(function() {
+    btn.disabled = false;
+    btn.textContent = "Submit response →";
+    err.style.display = "block";
+  });
+}
+</script>
+</body>
+</html>
